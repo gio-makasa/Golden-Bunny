@@ -1,16 +1,18 @@
 <template>
   <div id="dayMeal">
     <h2>Meal of the Day</h2>
-    <img :src="this.meal.strMealThumb" alt="mealPhoto" />
-    <div id="info">
-      <h3>{{ meal.strMeal }}</h3>
-      <div id="ingredients">
-        <p v-for="i in 20" :key="i" v-show="meal['strIngredient' + i]">
-          {{ meal["strIngredient" + i] }}; &#160;
-        </p>
+    <div id="meal">
+      <img :src="this.meal.strMealThumb" alt="mealPhoto" />
+      <div id="info">
+        <h3>{{ meal.strMeal }}</h3>
+        <div id="ingredients">
+          <p v-for="i in 20" :key="i" v-show="meal['strIngredient' + i]">
+            {{ meal["strIngredient" + i] }}; &#160;
+          </p>
+        </div>
+        <p>Category: {{ meal.strCategory }}</p>
+        <p>Area: {{ meal.strArea }}</p>
       </div>
-      <p>Category: {{ meal.strCategory }}</p>
-      <p>Area: {{ meal.strArea }}</p>
     </div>
   </div>
 </template>
@@ -37,7 +39,11 @@ export default {
 <style scoped>
 #dayMeal {
   margin: 50px 0;
+  height: fit-content;
   background-color: black;
+}
+#meal{
+  display: flex;
 }
 h2 {
   color: yellow;
@@ -46,7 +52,6 @@ h2 {
 }
 img {
   float: left;
-  height: 400px;
   width: 40%;
 }
 #info {
@@ -57,7 +62,6 @@ img {
   float: right;
   position: relative;
   width: 60%;
-  height: 400px;
   text-align: center;
   margin: 0 auto;
   color: orange;
@@ -83,8 +87,8 @@ h3 {
   right: 90%;
   transform: skewX(-10deg);
   content: "";
-  width: 250px;
-  height: 400px;
+  width: 25%;
+  height: 100%;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgb(0, 0, 0));
 }
 #info::after {
@@ -93,8 +97,28 @@ h3 {
   right: 90%;
   transform: skewX(-10deg);
   content: "";
-  width: 150px;
-  height: 400px;
+  width: 18%;
+  height: 100%;
   background-color: black;
+}
+
+@media screen and (max-width: 700px) {
+  img{
+    position: relative;
+    width: 100%;
+  }
+  #info{
+    position: absolute;
+    width: 100%;
+    height: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    font-size: small;
+  }
+  h3{
+    font-size: large;
+  }
+  #info::before, #info::after{
+    display: none;
+  }
 }
 </style>

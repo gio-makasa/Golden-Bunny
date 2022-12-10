@@ -115,7 +115,10 @@ export default {
             Object.values(data[this.email])[0]["password"] == this.password
           ) {
             this.$emit("loged");
-            localStorage.setItem('username',Object.values(data[this.email])[0]["username"]);
+            localStorage.setItem(
+              "username",
+              Object.values(data[this.email])[0]["username"]
+            );
           } else {
             alert("wrong password");
           }
@@ -141,7 +144,7 @@ div {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  z-index: 2;
+  z-index: 10;
 }
 .fa-xmark {
   position: absolute;
@@ -173,5 +176,11 @@ button {
   border-radius: 10px;
   cursor: pointer;
   font-size: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  div {
+    width: 100%;
+  }
 }
 </style>

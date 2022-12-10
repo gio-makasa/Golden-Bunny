@@ -6,17 +6,27 @@
       <router-link to="/review">review</router-link>
       <router-link to="/aboutus">about us</router-link>
     </nav>
+
     <div id="search">
-      <input type="text" />
+      <input type="text" @input="searching" v-model="meal" />
       <i class="fa-solid fa-magnifying-glass"></i>
+      <div v-if="this.meal" id="results">
+        <meal-result
+          v-for="i in 10"
+          :key="i"
+          :imgsrc="mealsData[i].strMealThumb"
+          :mealname="mealsData[i].strMeal"
+        ></meal-result>
+      </div>
     </div>
-    <div v-if="this.loged" id="log">
+
+    <div v-if="this.loged" id="loged">
       <router-link to="/" @click="logout">Log Out</router-link>
       <router-link to="/profile"
         ><img src="../assets/profile.png" alt="profile" id="profile"
       /></router-link>
     </div>
-    <div v-else>
+    <div v-else id="log">
       <button @click="toggleSign('register')">register</button>
       <button id="logIn" @click="toggleSign('log')">Log In</button>
     </div>
@@ -32,16 +42,20 @@
 
 <script>
 import TheSign from "../components/TheSign.vue";
+import MealResult from "./MealResult.vue";
 
 export default {
   components: {
     TheSign,
+    MealResult,
   },
   data() {
     return {
       sign: false,
       modal: "",
       loged: false,
+      meal: "",
+      mealsData: [],
     };
   },
   methods: {
@@ -57,6 +71,16 @@ export default {
 
     logout() {
       this.loged = false;
+    },
+
+    searching() {
+      fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=" + this.meal)
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          this.mealsData = data.meals;
+        });
     },
   },
 };
@@ -80,6 +104,7 @@ nav {
 }
 a,
 button {
+  font-family: "Dancing Script", cursive;
   position: relative;
   color: yellow;
   background-color: transparent;
@@ -87,7 +112,6 @@ button {
   cursor: pointer;
   text-decoration: none;
   text-transform: uppercase;
-  align-self: center;
 }
 .router-link-active::after {
   display: block;
@@ -107,11 +131,24 @@ button {
   padding: 5px;
 }
 input {
+  font-family: "Edu SA Beginner", cursive;
   border: none;
   background-color: transparent;
   outline: none;
   color: white;
   font-size: 16px;
+}
+#results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  position: absolute;
+  left: 0;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  padding: 1% 0;
+  margin: 1% 0;
 }
 #logIn {
   color: black;
@@ -121,12 +158,29 @@ input {
   font-weight: 900;
   border-radius: 10px;
 }
-#log {
+#loged {
   display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 #profile {
   width: 30px;
-  height: auto;
+  height: fit-content;
   border-radius: 50px;
+}
+
+@media screen and (max-width: 910px) {
+  header {
+    flex-direction: column;
+  }
+  #search {
+    margin: 1rem;
+  }
+  #logIn {
+    margin: 0;
+  }
+  img{
+    margin: 0 10px;
+  }
 }
 </style>

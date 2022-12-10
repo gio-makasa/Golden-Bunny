@@ -56,6 +56,7 @@ export default {};
 }
 #lists {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: space-evenly;
   text-transform: uppercase;
@@ -66,11 +67,11 @@ ul {
   padding: 0;
 }
 li:first-child {
-  font-size: 40px;
+  font-size: 150%;
   margin: 10px;
 }
 li {
-  font-size: 20px;
+  font-size: 100%;
   margin: 5px;
 }
 a {
@@ -114,5 +115,11 @@ i {
   bottom: 0;
   left: 0;
   font-size: 20px;
+}
+
+@media screen and (max-width: 910px) {
+  #info, iframe{
+    width: 100%;
+  }
 }
 </style>

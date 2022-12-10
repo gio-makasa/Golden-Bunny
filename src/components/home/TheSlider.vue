@@ -50,9 +50,9 @@ export default {
       slides[this.slideIndex - 1].style.display = "flex";
     },
   },
-  mounted(){
+  mounted() {
     this.showSlides(1);
-  }
+  },
 };
 </script>
 
@@ -60,7 +60,7 @@ export default {
 .slideshow-container {
   position: relative;
   width: 100%;
-  height: 700px;
+  height: 400px;
   overflow: hidden;
 }
 .mySlides {
@@ -93,7 +93,7 @@ export default {
   width: auto;
   padding: 16px;
   margin-top: -22px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.5);
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
@@ -104,5 +104,18 @@ export default {
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
+}
+
+@media screen and (max-width: 800px) {
+  .prev,
+  .next {
+    font-size: small;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .slideshow-container {
+    height: 200px;
+  }
 }
 </style>

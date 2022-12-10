@@ -18,10 +18,16 @@ export default {
 
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&display=swap');
 
 * {
-  font-family: "Dancing Script", cursive;
+  /* font-family: "Dancing Script", cursive; */
+  font-family: 'Edu SA Beginner', cursive;
   box-sizing: border-box;
   margin: 0;
+}
+
+body{
+  background-color: #333333;
 }
 </style>

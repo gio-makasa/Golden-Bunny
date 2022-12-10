@@ -46,15 +46,27 @@ img {
 }
 p {
   width: 90%;
+  z-index: 2;
 }
 #info::after {
   position: absolute;
   top: 0;
-  right: 95%;
+  right: 90%;
   transform: skewX(-10deg);
   content: "";
-  width: 150px;
-  height: 400px;
+  width: 18%;
+  height: 100%;
   background-color: black;
+}
+
+@media screen and (max-width: 800px) {
+  img, #info{
+    width: 100%;
+    font-size: medium;
+    height: fit-content;
+  }
+  #info::after{
+    display: none;
+  }
 }
 </style>

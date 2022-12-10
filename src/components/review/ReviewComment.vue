@@ -54,4 +54,11 @@ h4 {
 .right {
   float: right;
 }
+
+@media screen and (max-width: 700px) {
+  .card{
+    width: 100%;
+    margin: 1rem 0;
+  }
+}
 </style>
