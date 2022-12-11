@@ -103,4 +103,10 @@ textarea {
   border-radius: 5px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 910px) {
+  form{
+    width: 100%;
+  }
+}
 </style>

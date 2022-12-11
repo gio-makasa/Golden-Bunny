@@ -172,6 +172,7 @@ input {
 @media screen and (max-width: 910px) {
   header {
     flex-direction: column;
+    padding-bottom: 10px;
   }
   #search {
     margin: 1rem;

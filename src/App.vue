@@ -19,10 +19,12 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Edu+SA+Beginner&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
 * {
   /* font-family: "Dancing Script", cursive; */
-  font-family: 'Edu SA Beginner', cursive;
+  /* font-family: 'Edu SA Beginner', cursive; */
+  font-family: 'Caveat', cursive;
   box-sizing: border-box;
   margin: 0;
 }

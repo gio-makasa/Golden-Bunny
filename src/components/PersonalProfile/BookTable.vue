@@ -142,9 +142,16 @@ textarea {
   box-shadow: 0 0 10px yellow;
 }
 
+
+@media screen and (max-width: 1100px) {
+  form{
+    width: 100%;
+  }
+}
+
 @media (max-width: 800px) {
   .row {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   .col-25 {
     margin-bottom: 20px;

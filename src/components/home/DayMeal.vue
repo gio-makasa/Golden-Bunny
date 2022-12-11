@@ -112,6 +112,12 @@ h3 {
     width: 100%;
     height: 100vw;
     background-color: rgba(0, 0, 0, 0.5);
+    align-content: center;
+    justify-content: center;
+    font-size: small;
+  }
+  #ingredients{
+    width: 100%;
     font-size: small;
   }
   h3{

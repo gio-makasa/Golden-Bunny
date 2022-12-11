@@ -60,7 +60,7 @@ export default {
 .slideshow-container {
   position: relative;
   width: 100%;
-  height: 400px;
+  height: 700px;
   overflow: hidden;
 }
 .mySlides {
@@ -107,6 +107,9 @@ export default {
 }
 
 @media screen and (max-width: 800px) {
+  .slideshow-container {
+    height: 400px;
+  }
   .prev,
   .next {
     font-size: small;
