@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>oop...</h2>
+    <h2>oops...</h2>
     <h3>
       Looks like you lost, let me take you at
       <router-link to="/home">home</router-link>

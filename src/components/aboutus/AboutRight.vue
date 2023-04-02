@@ -1,5 +1,5 @@
 <template>
-  <section id="about">
+  <section class="about">
     <img :src="imglink" alt="photo" />
     <div id="info">
       <p>
@@ -20,52 +20,46 @@ export default {
 
 
 <style scoped>
-#about {
+.about {
   background-color: black;
+  height: 400px;
+  overflow: hidden;
 }
 img {
   float: left;
-  height: 400px;
   width: 40%;
+  height: 100%;
 }
 #info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-  float: right;
-  position: relative;
+  justify-content: center;
   width: 60%;
-  height: 400px;
+  height: 100%;
   text-align: center;
-  margin: 0 auto;
   color: orange;
-  font-size: 30px;
-  padding: 30px;
+  font-size: 2rem;
   background-color: black;
+  transform: skewX(-10deg);
+  position: relative;
+  left: -2.5rem;
+  box-shadow: -5rem 0 0 rgba(0, 0, 0, 0.5);
 }
 p {
   width: 90%;
   z-index: 2;
-}
-#info::after {
-  position: absolute;
-  top: 0;
-  right: 90%;
-  transform: skewX(-10deg);
-  content: "";
-  width: 18%;
-  height: 100%;
-  background-color: black;
+  transform: skewX(20deg);
 }
 
 @media screen and (max-width: 800px) {
-  img, #info{
+  img,
+  #info {
     width: 100%;
     font-size: medium;
     height: fit-content;
   }
-  #info::after{
+  #info::after {
     display: none;
   }
 }

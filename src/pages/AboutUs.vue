@@ -20,3 +20,9 @@ export default {
   components: { AboutRight, AboutLeft },
 };
 </script>
+
+<style scoped>
+* {
+  background-color: black;
+}
+</style>
