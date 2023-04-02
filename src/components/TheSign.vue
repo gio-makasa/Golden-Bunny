@@ -119,6 +119,7 @@ export default {
               "username",
               Object.values(data[this.email])[0]["username"]
             );
+            this.$router.replace({ path: '/profile' })
           } else {
             alert("wrong password");
           }

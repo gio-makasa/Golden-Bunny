@@ -1,5 +1,6 @@
 <template>
-  <div class="mealCard">
+  <BaseSpinner v-if="loading" />
+  <div class="mealCard" v-else>
     <img :src="this.meal.strMealThumb" alt="mealPhoto" />
     <h3>{{ meal.strMeal }}</h3>
     <div id="ingredients">
@@ -11,15 +12,20 @@
 </template>
 
 <script>
+import BaseSpinner from "../BaseSpinner.vue";
+
 export default {
+  components: { BaseSpinner },
   data() {
     return {
       meal: {},
+      loading: false,
     };
   },
   props: ["Category"],
   mounted() {
     if (this.Category == "Dessert" || this.Category == "Vegetarian") {
+      this.loading = true;
       fetch(
         "https://www.themealdb.com/api/json/v1/1/filter.php?c=" + this.Category
       )
@@ -35,15 +41,18 @@ export default {
               return response.json();
             })
             .then((data) => {
+              this.loading = false;
               this.meal = data.meals[0];
             });
         });
     } else {
+      this.loading = true;
       fetch("https://www.themealdb.com/api/json/v1/1/random.php")
         .then((response) => {
           return response.json();
         })
         .then((data) => {
+          this.loading = false;
           this.meal = data.meals[0];
         });
     }
