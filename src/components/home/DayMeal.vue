@@ -2,7 +2,7 @@
   <div id="dayMeal">
     <h2>Meal of the Day</h2>
     <div id="meal">
-      <img :src="this.meal.strMealThumb" alt="mealPhoto" />
+      <img :src="meal.strMealThumb" alt="mealPhoto" />
       <div id="info">
         <h3>{{ meal.strMeal }}</h3>
         <div id="ingredients">
@@ -17,23 +17,20 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      meal: {},
-    };
-  },
-  mounted() {
-    fetch("https://www.themealdb.com/api/json/v1/1/random.php")
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        this.meal = data.meals[0];
-      });
-  },
-};
+<script setup>
+import { onMounted, reactive } from 'vue';
+
+let meal = reactive({})
+
+onMounted(() => {
+  fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      meal = data.meals[0];
+    });
+})
 </script>
 
 <style scoped>
@@ -42,18 +39,22 @@ export default {
   height: fit-content;
   background-color: black;
 }
-#meal{
+
+#meal {
   display: flex;
 }
+
 h2 {
   color: yellow;
   padding: 10px;
   font-size: 40px;
 }
+
 img {
   float: left;
   width: 40%;
 }
+
 #info {
   display: flex;
   flex-direction: column;
@@ -69,11 +70,13 @@ img {
   padding: 30px;
   background-color: black;
 }
+
 h3 {
   font-size: 50px;
   color: yellow;
   width: 70%;
 }
+
 #ingredients {
   margin: 50px;
   display: flex;
@@ -82,6 +85,7 @@ h3 {
   font-size: 20px;
   width: 70%;
 }
+
 #info::before {
   position: absolute;
   right: 90%;
@@ -91,6 +95,7 @@ h3 {
   height: 100%;
   background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgb(0, 0, 0));
 }
+
 #info::after {
   position: absolute;
   top: 0;
@@ -103,11 +108,12 @@ h3 {
 }
 
 @media screen and (max-width: 700px) {
-  img{
+  img {
     position: relative;
     width: 100%;
   }
-  #info{
+
+  #info {
     position: absolute;
     width: 100%;
     height: 100vw;
@@ -116,14 +122,18 @@ h3 {
     justify-content: center;
     font-size: small;
   }
-  #ingredients{
+
+  #ingredients {
     width: 100%;
     font-size: small;
   }
-  h3{
+
+  h3 {
     font-size: large;
   }
-  #info::before, #info::after{
+
+  #info::before,
+  #info::after {
     display: none;
   }
 }

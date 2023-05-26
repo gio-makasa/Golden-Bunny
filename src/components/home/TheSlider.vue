@@ -13,47 +13,39 @@
       <img class="slide" src="..\..\assets\slides\out.jpg" alt="out" />
     </div>
 
-    <a class="prev" @click="plusslides(-1)"
-      ><i class="fa-solid fa-arrow-left"></i
-    ></a>
-    <a class="next" @click="plusslides(1)"
-      ><i class="fa-solid fa-arrow-right"></i
-    ></a>
+    <a class="prev" @click="plusslides(-1)"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="next" @click="plusslides(1)"><i class="fa-solid fa-arrow-right"></i></a>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      slideIndex: 1,
-    };
-  },
-  methods: {
-    plusslides(n) {
-      this.showSlides((this.slideIndex += n));
-    },
-    showSlides(n) {
-      let slides = document.getElementsByClassName("mySlides");
+<script setup>
+import { onMounted, ref } from 'vue';
 
-      //slides on cycle
-      if (n > slides.length) {
-        this.slideIndex = 1;
-      } //first slide after last one
-      if (n < 1) {
-        this.slideIndex = slides.length;
-      } //last slide before first one
+const slideIndex = ref(1);
 
-      for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-      }
-      slides[this.slideIndex - 1].style.display = "flex";
-    },
-  },
-  mounted() {
-    this.showSlides(1);
-  },
-};
+function plusslides(n) {
+  showSlides(slideIndex.value += n);
+}
+
+function showSlides(n) {
+  let slides = document.getElementsByClassName("mySlides");
+
+  //slides on cycle
+  if (n > slides.length) {
+    slideIndex.value = 1;
+  } //first slide after last one
+  if (n < 1) {
+    slideIndex.value = slides.length;
+  } //last slide before first one
+
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  slides[slideIndex.value - 1].style.display = "flex";
+}
+onMounted(() => {
+  showSlides(1);
+})
 </script>
 
 <style scoped>
@@ -63,12 +55,14 @@ export default {
   height: 700px;
   overflow: hidden;
 }
+
 .mySlides {
   position: relative;
   display: none;
   width: 100%;
   height: 100%;
 }
+
 .slide {
   position: absolute;
   top: 50%;
@@ -76,6 +70,7 @@ export default {
   width: 100%;
   animation: slider 0.5s linear;
 }
+
 @keyframes slider {
   from {
     opacity: 0%;
@@ -85,6 +80,7 @@ export default {
     opacity: 100%;
   }
 }
+
 .prev,
 .next {
   cursor: pointer;
@@ -110,6 +106,7 @@ export default {
   .slideshow-container {
     height: 400px;
   }
+
   .prev,
   .next {
     font-size: small;

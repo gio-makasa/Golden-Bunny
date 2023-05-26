@@ -8,14 +8,10 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import TheSlider from "../components/home/TheSlider.vue";
 import MealList from "../components/home/mealList.vue";
 import DayMeal from "../components/home/DayMeal.vue";
-
-export default {
-  components: { TheSlider, MealList, DayMeal },
-};
 </script>
 
 <style scoped>

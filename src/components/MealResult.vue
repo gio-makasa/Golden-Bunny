@@ -5,26 +5,26 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["imgsrc", "mealname"],
-};
+<script setup>
+const props = defineProps(["imgsrc", "mealname"]);
 </script>
 
 <style scoped>
 .result {
   width: 9%;
 }
+
 img {
   width: 100%;
   border-radius: 10px;
 }
+
 h3 {
   text-align: center;
 }
+
 @media screen and (max-width: 910px) {
-  .result{
+  .result {
     width: 100px;
   }
-}
-</style>
+}</style>

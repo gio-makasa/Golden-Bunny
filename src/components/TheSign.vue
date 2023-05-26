@@ -4,12 +4,7 @@
     <h2>Log In</h2>
     <form @submit.prevent="Login" id="Login">
       <input type="email" placeholder="Email" v-model="email" required />
-      <input
-        type="password"
-        placeholder="Password"
-        v-model="password"
-        required
-      />
+      <input type="password" placeholder="Password" v-model="password" required />
       <button>Log in</button>
     </form>
   </div>
@@ -20,113 +15,97 @@
     <form @submit.prevent="Register" id="Register">
       <input type="email" name="email" placeholder="E-mail" required />
       <input type="text" name="username" placeholder="Username" required />
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        minlength="6"
-        required
-      />
-      <input
-        id="Rpassword"
-        type="password"
-        name="Rpassword"
-        placeholder="Repeat Password"
-        minlength="6"
-        required
-      />
+      <input type="password" name="password" placeholder="Password" minlength="6" required />
+      <input id="Rpassword" type="password" name="Rpassword" placeholder="Repeat Password" minlength="6" required />
       <button>Register</button>
     </form>
   </div>
 </template>
 
-<script>
-export default {
-  props: ["signinfo"],
-  data() {
-    return {
-      registerData: {},
-      email: "",
-      password: "",
-    };
-  },
-  methods: {
-    async validation(info) {
-      let val = true;
+<script setup>
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-      if (info.password != info.Rpassword) {
+const props = defineProps(["signinfo"]);
+const emit = defineEmits(['loged', 'closesign'])
+const router = useRouter();
+
+const registerData = reactive({});
+const email = ref("");
+const password = ref("");
+
+async function validation(info) {
+  let val = true;
+
+  if (info.password != info.Rpassword) {
+    val = false;
+    document.getElementById("Rpassword").style.boxShadow = "0 0 10px red";
+  } else {
+    document.getElementById("Rpassword").style.boxShadow = "0 0 10px yellow";
+  }
+
+  await fetch(
+    `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/Registered/${info.email}.json`
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data !== null) {
         val = false;
-        document.getElementById("Rpassword").style.boxShadow = "0 0 10px red";
-      } else {
-        document.getElementById("Rpassword").style.boxShadow =
-          "0 0 10px yellow";
+        alert("User Exists");
       }
+    });
 
-      await fetch(
-        `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/Registered/${info.email}.json`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          if (data !== null) {
-            val = false;
-            alert("User Exists");
-          }
-        });
+  return val;
+}
 
-      return val;
-    },
+function Register() {
+  const myForm = document.getElementById("Register");
+  const formData = new FormData(myForm);
+  for (const [key, value] of formData) {
+    registerData[key] = value;
+  }
 
-    Register() {
-      const myForm = document.getElementById("Register");
-      const formData = new FormData(myForm);
-      for (const [key, value] of formData) {
-        this.registerData[key] = value;
-      }
-
-      this.validation(this.registerData).then((text) => {
-        if (text) {
-          fetch(
-            `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/Registered/${this.registerData["email"]}.json`,
-            {
-              method: "POST",
-              body: JSON.stringify(this.registerData),
-            }
-          );
-          myForm.reset();
-        }
-      });
-    },
-
-    Login() {
+  validation(registerData).then((text) => {
+    if (text) {
       fetch(
-        `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/Registered.json`
-      )
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          if (
-            Object.keys(data).filter((email) => email == this.email).length == 0
-          ) {
-            alert("User does not exist");
-          } else if (
-            Object.values(data[this.email])[0]["password"] == this.password
-          ) {
-            this.$emit("loged");
-            localStorage.setItem(
-              "username",
-              Object.values(data[this.email])[0]["username"]
-            );
-            this.$router.replace({ path: '/profile' })
-          } else {
-            alert("wrong password");
-          }
-        });
-    },
-  },
-};
+        `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/Registered/${registerData["email"]}.json`,
+        {
+          method: "POST",
+          body: JSON.stringify(registerData),
+        }
+      );
+      myForm.reset();
+    }
+  });
+}
+
+function Login() {
+  fetch(
+    `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/Registered.json`
+  )
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (
+        Object.keys(data).filter((emailData) => emailData == email.value).length == 0
+      ) {
+        alert("User does not exist");
+      } else if (
+        Object.values(data[email.value])[0]["password"] == password.value
+      ) {
+        emit("loged");
+        localStorage.setItem(
+          "username", Object.values(data[email.value])[0]["username"]
+        );
+        router.replace({ path: '/profile' })
+      } else {
+        alert("wrong password");
+      }
+    });
+}
 </script>
 
 <style scoped>
@@ -147,6 +126,7 @@ div {
   flex-direction: column;
   z-index: 10;
 }
+
 .fa-xmark {
   position: absolute;
   top: 0;
@@ -155,12 +135,14 @@ div {
   cursor: pointer;
   font-size: x-large;
 }
+
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
 }
+
 input {
   padding: 15px;
   box-shadow: 0 0 10px yellow;
@@ -168,6 +150,7 @@ input {
   font-size: x-large;
   border: none;
 }
+
 button {
   color: black;
   background-color: yellow;

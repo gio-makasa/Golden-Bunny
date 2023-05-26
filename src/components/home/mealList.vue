@@ -7,13 +7,10 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import MealCard from "./MealCard.vue";
 
-export default {
-  components: { MealCard },
-  props: ["listTitle"],
-};
+const props = defineProps(["listTitle"]);
 </script>
 
 <style scoped>
@@ -24,21 +21,24 @@ export default {
   padding: 20px;
   margin-top: 50px;
 }
+
 h2 {
   color: yellow;
   margin: 10px;
 }
+
 #list {
   display: flex;
   justify-content: space-between;
   overflow-x: scroll;
   gap: 20px;
 }
+
 #list::-webkit-scrollbar {
   height: 5px;
 }
+
 #list::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to right, orange, yellow);
   border-radius: 5px;
-}
-</style>
+}</style>

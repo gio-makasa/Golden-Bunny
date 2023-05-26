@@ -6,51 +6,34 @@
       <label for="score">Rate</label>
       <div id="rate">
         <p>0</p>
-        <input
-          type="range"
-          id="score"
-          name="score"
-          min="0"
-          max="5"
-          v-model="review.score"
-        />
+        <input type="range" id="score" name="score" min="0" max="5" v-model="review.score" />
         <p>5</p>
       </div>
     </div>
 
     <label for="review">Comment</label>
-    <textarea
-      name="review"
-      id="review"
-      rows="5"
-      v-model="review.comment"
-    ></textarea>
+    <textarea name="review" id="review" rows="5" v-model="review.comment"></textarea>
     <input type="submit" value="submit" id="btn" />
   </form>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      review: { name: "", comment: "", score: 3 },
-    };
-  },
-  methods: {
-    send() {
-      this.review.name = localStorage.getItem("username");
+<script setup>
+import { reactive } from 'vue';
 
-      fetch(
-        `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/reviews.json`,
-        {
-          method: "POST",
-          body: JSON.stringify(this.review),
-        }
-      );
-      this.review.comment = "";
-    },
-  },
-};
+const review = reactive({ name: "", comment: "", score: 3 });
+
+function send() {
+  review.name = localStorage.getItem("username");
+
+  fetch(
+    `https://vue-http-demo-d0a90-default-rtdb.firebaseio.com/reviews.json`,
+    {
+      method: "POST",
+      body: JSON.stringify(review),
+    }
+  );
+  review.comment = "";
+}
 </script>
 
 <style scoped>
@@ -65,7 +48,8 @@ form {
   border-radius: 5px;
   padding: 1rem 0.5rem;
 }
-form > * {
+
+form>* {
   margin-bottom: 10px;
 }
 
@@ -105,7 +89,7 @@ textarea {
 }
 
 @media screen and (max-width: 910px) {
-  form{
+  form {
     width: 100%;
   }
 }

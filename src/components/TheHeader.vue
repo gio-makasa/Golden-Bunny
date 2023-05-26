@@ -8,82 +8,61 @@
     </nav>
 
     <div id="search">
-      <input type="text" @input="searching" v-model="meal" />
+      <input type="text" @input="searching" placeholder="Search..." v-model="meal" />
       <i class="fa-solid fa-magnifying-glass"></i>
-      <div v-if="this.meal" id="results">
-        <meal-result
-          v-for="i in 10"
-          :key="i"
-          :imgsrc="mealsData[i].strMealThumb"
-          :mealname="mealsData[i].strMeal"
-        ></meal-result>
+      <div v-if="meal" id="results">
+        <meal-result v-for="i in 10" :key="i" :imgsrc="mealsData[i].strMealThumb"
+          :mealname="mealsData[i].strMeal"></meal-result>
       </div>
     </div>
 
-    <div v-if="this.loged" id="loged">
+    <div v-if="loged" id="loged">
       <router-link to="/" @click="logout">Log Out</router-link>
-      <router-link to="/profile"
-        ><img src="../assets/profile.png" alt="profile" id="profile"
-      /></router-link>
+      <router-link to="/profile"><img src="../assets/profile.png" alt="profile" id="profile" /></router-link>
     </div>
     <div v-else id="log">
       <button @click="toggleSign('register')">register</button>
       <button id="logIn" @click="toggleSign('log')">Log In</button>
     </div>
 
-    <the-sign
-      @closesign="toggleSign"
-      @loged="logedin"
-      v-if="this.sign"
-      :signinfo="this.modal"
-    ></the-sign>
+    <the-sign @closesign="toggleSign" @loged="logedin" v-if="sign" :signinfo="modal"></the-sign>
   </header>
 </template>
 
-<script>
+<script setup>
+import { ref } from "vue";
 import TheSign from "../components/TheSign.vue";
 import MealResult from "./MealResult.vue";
 
-export default {
-  components: {
-    TheSign,
-    MealResult,
-  },
-  data() {
-    return {
-      sign: false,
-      modal: "",
-      loged: false,
-      meal: "",
-      mealsData: [],
-    };
-  },
-  methods: {
-    toggleSign(n) {
-      this.modal = n;
-      this.sign = !this.sign;
-    },
+const sign = ref(false);
+const modal = ref("");
+const loged = ref(false);
+const meal = ref("");
+const mealsData = ref([])
 
-    logedin() {
-      this.loged = true;
-      this.sign = false;
-    },
+function toggleSign(n) {
+  modal.value = n;
+  sign.value = !sign.value;
+}
 
-    logout() {
-      this.loged = false;
-    },
+function logedin() {
+  loged.value = true;
+  sign.value = false;
+}
 
-    searching() {
-      fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=" + this.meal)
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          this.mealsData = data.meals;
-        });
-    },
-  },
-};
+function logout() {
+  loged.value = false;
+}
+
+function searching() {
+  fetch("https://www.themealdb.com/api/json/v1/1/search.php?s=" + meal.value)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      mealsData.value = data.meals;
+    });
+}
 </script>
 
 <style scoped>
@@ -94,14 +73,17 @@ header {
   align-items: center;
   justify-content: space-between;
 }
+
 img {
   height: 60px;
   margin: auto 30px;
 }
+
 nav {
   display: flex;
   gap: 20px;
 }
+
 a,
 button {
   font-family: "Dancing Script", cursive;
@@ -113,6 +95,7 @@ button {
   text-decoration: none;
   text-transform: uppercase;
 }
+
 .router-link-active::after {
   display: block;
   position: absolute;
@@ -124,20 +107,22 @@ button {
   border-radius: 50%;
   background-color: yellow;
 }
+
 #search {
   width: fit-content;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: white;
   padding: 5px;
 }
+
 input {
   font-family: "Edu SA Beginner", cursive;
   border: none;
   background-color: transparent;
   outline: none;
-  color: white;
   font-size: 16px;
 }
+
 #results {
   display: flex;
   flex-wrap: wrap;
@@ -150,6 +135,7 @@ input {
   padding: 1% 0;
   margin: 1% 0;
 }
+
 #logIn {
   color: black;
   background-color: yellow;
@@ -158,11 +144,13 @@ input {
   font-weight: 900;
   border-radius: 10px;
 }
+
 #loged {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
 }
+
 #profile {
   width: 30px;
   height: fit-content;
@@ -174,13 +162,16 @@ input {
     flex-direction: column;
     padding-bottom: 10px;
   }
+
   #search {
     margin: 1rem;
   }
+
   #logIn {
     margin: 0;
   }
-  img{
+
+  img {
     margin: 0 10px;
   }
 }

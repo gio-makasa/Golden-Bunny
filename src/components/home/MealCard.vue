@@ -35,7 +35,7 @@ export default {
         .then((data) => {
           fetch(
             "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" +
-              data.meals[Math.floor(Math.random() * data.meals.length)].idMeal
+            data.meals[Math.floor(Math.random() * data.meals.length)].idMeal
           )
             .then((response) => {
               return response.json();
@@ -70,11 +70,13 @@ export default {
   border-radius: 20px;
   overflow-x: hidden;
 }
+
 h3 {
   margin: 5px;
   max-height: 45px;
   overflow: auto;
 }
+
 #ingredients {
   color: orange;
   padding-left: 10px;
@@ -84,13 +86,14 @@ h3 {
   flex-wrap: wrap;
   overflow-y: auto;
 }
+
 h3::-webkit-scrollbar,
 #ingredients::-webkit-scrollbar {
   width: 5px;
 }
+
 h3::-webkit-scrollbar-thumb,
 #ingredients::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to right, orange, yellow) !important;
   border-radius: 1px;
-}
-</style>
+}</style>

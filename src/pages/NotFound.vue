@@ -13,16 +13,19 @@
   color: white;
   text-align: center;
 }
+
 div {
   padding: 10rem 0;
 }
+
 h2 {
   font-size: 8rem;
 }
+
 h3 {
   font-size: 5rem;
 }
+
 a {
   color: yellow;
-}
-</style>
+}</style>

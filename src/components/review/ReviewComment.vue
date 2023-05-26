@@ -9,10 +9,8 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ["comment", "score", "userName", "right"],
-};
+<script setup>
+const props = defineProps(["comment", "score", "userName", "right"]);
 </script>
 
 <style scoped>
@@ -27,38 +25,43 @@ export default {
   height: 150px;
   float: left;
 }
+
 img {
   height: 100%;
   border-radius: 20px;
 }
+
 .info {
   margin: auto;
   text-align: center;
   width: 100%;
 }
+
 h3 {
   text-align: end;
   color: yellow;
   font-size: 25px;
   margin: 0 20px;
 }
+
 p {
   color: white;
   font-size: 20px;
   margin: 10px;
 }
+
 h4 {
   color: yellow;
   font-size: 30px;
 }
+
 .right {
   float: right;
 }
 
 @media screen and (max-width: 700px) {
-  .card{
+  .card {
     width: 100%;
     margin: 1rem 0;
   }
-}
-</style>
+}</style>

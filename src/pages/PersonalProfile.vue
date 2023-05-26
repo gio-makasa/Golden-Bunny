@@ -5,13 +5,9 @@
   </section>
 </template>
 
-<script>
+<script setup>
 import BookTable from "../components/PersonalProfile/BookTable.vue";
 import AddReview from "../components/PersonalProfile/AddReview.vue";
-
-export default {
-  components: { BookTable, AddReview },
-};
 </script>
 
 <style scoped>
